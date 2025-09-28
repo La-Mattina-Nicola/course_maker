@@ -85,15 +85,17 @@ WSGI_APPLICATION = 'course_maker.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = ({
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    } if(DEBUG)
-    else {
-         "default": dj_database_url.config(
+DATABASES = (
+    {
+        "default": dj_database_url.config(
             default=env("DATABASE_URL"), conn_max_age=600, conn_health_checks=True
-        )
+        ),
+    }
+    if not DEBUG
+    else {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
         }
     }
 )
