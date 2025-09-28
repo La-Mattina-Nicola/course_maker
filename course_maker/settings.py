@@ -60,6 +60,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'course_maker.urls'
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 TEMPLATES = [
     {
