@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from urllib.parse import urlparse, parse_qsl
 from pathlib import Path
 import environ
+import dj_database_url
 
 env = environ.Env()
 
@@ -84,26 +85,18 @@ WSGI_APPLICATION = 'course_maker.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-if not DEBUG:
-    tmpPostgres = urlparse(env("DATABASE_URL"))
-
 DATABASES = ({
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     } if(DEBUG)
     else {
-        'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': tmpPostgres.path.replace('/', ''),
-        'USER': tmpPostgres.username,
-        'PASSWORD': tmpPostgres.password,
-        'HOST': tmpPostgres.hostname,
-        'PORT': 5432,
-        'OPTIONS': dict(parse_qsl(tmpPostgres.query)),
+         "default": dj_database_url.config(
+            default=env("DATABASE_URL"), conn_max_age=600, conn_health_checks=True
+        )
         }
     }
-})
+)
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
