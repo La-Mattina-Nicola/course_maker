@@ -32,18 +32,16 @@ class RecetteViewSet(ModelViewSet):
     )
     def createRecette(self, request, pk=None):
         try:
-            name = request.data.get("name")
-            idIngredient = request.data.get("ingredients")
-
+            name = request.data.get("name", None)
+            idIngredient = request.data.get("ingredients", None)
+            
             if not name or not idIngredient:
                 return Response({"message": "donnée manquante"}, status=400)
-
-            # idIngredient doit être une liste d'IDs
+            
             ingredients = Ingredient.objects.filter(id__in=idIngredient)
-            recette = Recette.objects.create(nom=name)
-            recette.ingredients.set(ingredients)  # ✅ Utilisation correcte
-            recette.save()
-
+            recette = Recette.objects.create(name=name)
+            recette.ingredients.set(ingredients)
+            
             return Response({"message": "Recette créée avec succès"}, status=201)
         except Exception as e:
             return Response({"error": str(e)}, status=500)
