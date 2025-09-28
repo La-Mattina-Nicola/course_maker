@@ -20,4 +20,4 @@ ENV SECRET_KEY "non-secret-key-for-building-purposes"
 RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
-CMD python manage.py runserver
+CMD gunicorn --bind :8000 --workers 2 course_maker.wsgi
