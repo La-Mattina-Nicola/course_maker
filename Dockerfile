@@ -20,4 +20,4 @@ ENV SECRET_KEY "non-secret-key-for-building-purposes"
 RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
-CMD python main.py
+CMD python manage.py runserver
