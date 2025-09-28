@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     
     'whitenoise.runserver_nostatic',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
     'ingredient',
 ]
 
@@ -82,7 +82,8 @@ WSGI_APPLICATION = 'course_maker.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-tmpPostgres = urlparse(env("DATABASE_URL"))
+if not DEBUG:
+    tmpPostgres = urlparse(env("DATABASE_URL"))
 
 DATABASES = ({
     'default': {
