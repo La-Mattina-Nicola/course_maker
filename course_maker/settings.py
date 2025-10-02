@@ -30,7 +30,7 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = env.bool("DEBUG", False)
 
 ALLOWED_HOSTS = [
-    env("BACKEND_HOST", default='127.0.0.1')
+    env("BACKEND_HOST", default='127.0.0.1'), '10.0.2.2', '192.168.1.44'
 ]
 
 CSRF_TRUSTED_ORIGINS = ["https://" + env("BACKEND_HOST", default="")]

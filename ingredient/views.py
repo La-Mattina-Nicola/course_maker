@@ -1,47 +1,64 @@
-from django.shortcuts import render
-from django.http import HttpResponse
 from rest_framework.viewsets import ModelViewSet
-from .models import TypeIngredient, Ingredient, Recette
-from .serializers import TypeIngredientSerializer, IngredientSerializer, RecetteSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.response import Response
-# Create your views here.
 
-# return all
+from .models import IngredientType, Ingredient, Recipe, Family, RecipeType, ShoppingList, ShoppingListItem
 
-class TypeIngredientViewSet(ModelViewSet):
+from .serializers import (
+    IngredientTypeSerializer, IngredientSerializer, RecipeSerializer,
+    FamilySerializer, RecipeTypeSerializer, ShoppingListSerializer,
+    ShoppingListItemSerializer
+)
+
+class ShoppingListViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
-    queryset = TypeIngredient.objects.all()
-    serializer_class = TypeIngredientSerializer
-    
-class IngredientModelViewSet(ModelViewSet):
+    queryset = ShoppingList.objects.all().order_by('id')
+    serializer_class = ShoppingListSerializer
+
+class ShoppingListItemViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
-    queryset = Ingredient.objects.all()
+    queryset = ShoppingListItem.objects.all().order_by('id')
+    serializer_class = ShoppingListItemSerializer
+
+class FamilyViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = Family.objects.all().order_by('id')
+    serializer_class = FamilySerializer
+
+class RecipeTypeViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = RecipeType.objects.all().order_by('id')
+    serializer_class = RecipeTypeSerializer
+
+class IngredientTypeViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = IngredientType.objects.all().order_by('id')
+    serializer_class = IngredientTypeSerializer
+
+class IngredientViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = Ingredient.objects.all().order_by('id')
     serializer_class = IngredientSerializer
-    
-class RecetteViewSet(ModelViewSet):
+
+class RecipeViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
-    queryset = Recette.objects.all()
-    serializer_class = RecetteSerializer
-    
-    @action(
-    detail=False,
-    methods=["post"],
-    permission_classes=[IsAuthenticated],
-    )
-    def createRecette(self, request, pk=None):
+    queryset = Recipe.objects.all().order_by('id')
+    serializer_class = RecipeSerializer
+
+    @action(detail=False, methods=["post"], permission_classes=[IsAuthenticated])
+    def create_recipe(self, request):
         try:
-            name = request.data.get("name", None)
-            idIngredient = request.data.get("ingredients", None)
-            
-            if not name or not idIngredient:
-                return Response({"message": "donnée manquante"}, status=400)
-            
-            ingredients = Ingredient.objects.filter(id__in=idIngredient)
-            recette = Recette.objects.create(name=name)
-            recette.ingredients.set(ingredients)
-            
-            return Response({"message": "Recette créée avec succès"}, status=201)
+            name = request.data.get("name")
+            ingredient_ids = request.data.get("ingredients")
+
+            if not name or not ingredient_ids:
+                return Response({"message": "Missing data"}, status=400)
+
+            ingredients = Ingredient.objects.filter(id__in=ingredient_ids)
+            recipe = Recipe.objects.create(name=name)
+            recipe.ingredients.set(ingredients)
+
+            return Response({"message": "Recipe created successfully"}, status=201)
         except Exception as e:
             return Response({"error": str(e)}, status=500)
