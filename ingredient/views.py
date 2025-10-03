@@ -154,7 +154,25 @@ class UserDataView(APIView):
         family_data = FamilySerializer(families, many=True).data
 
         shopping_lists = ShoppingList.objects.filter(family__in=families)
-        shopping_list_data = ShoppingListSerializer(shopping_lists, many=True).data
+        shopping_lists_response = []
+        for shopping_list in shopping_lists:
+            items = ShoppingListItem.objects.filter(shopping_list=shopping_list)
+            items_data = [
+                {
+                    "id": item.id,
+                    "ingredient_name": item.ingredient.name,
+                    "quantity": item.quantity,
+                    "unit": item.unit.name if item.unit else None
+                }
+                for item in items
+            ]
+            shopping_lists_response.append({
+                "id": shopping_list.id,
+                "name": shopping_list.name,
+                "created_at": shopping_list.created_at,
+                "family": shopping_list.family.id,
+                "items": items_data
+            })
 
         return Response({
             "user": {
@@ -163,5 +181,5 @@ class UserDataView(APIView):
                 "email": user.email,
             },
             "families": family_data,
-            "shopping_lists": shopping_list_data
+            "shopping_lists": shopping_lists_response
         })
