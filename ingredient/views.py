@@ -1,22 +1,26 @@
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from rest_framework.serializers import ModelSerializer, CharField, ValidationError
-from rest_framework import status
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
+
+from rest_framework import status
+from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.response import Response
+from rest_framework.serializers import ModelSerializer, CharField, ValidationError
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
-from .models import IngredientType, Ingredient, Recipe, Family, RecipeType, ShoppingList, ShoppingListItem
-from rest_framework.permissions import AllowAny
+
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+from .models import (
+    IngredientType, Ingredient, Recipe, Family, RecipeType,
+    ShoppingList, ShoppingListItem
+)
 from .serializers import (
     IngredientTypeSerializer, IngredientSerializer, RecipeSerializer,
     FamilySerializer, RecipeTypeSerializer, ShoppingListSerializer,
     ShoppingListItemSerializer, RegisterSerializer
 )
-from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-
 
 class RegisterView(APIView):
     permission_classes = [AllowAny]
@@ -70,7 +74,7 @@ class ShoppingListViewSet(ModelViewSet):
         # Récupère la shopping list de la famille
         shopping_list = ShoppingList.objects.filter(family=family).first()
         if not shopping_list:
-            shopping_list = ShoppingList.objects.create(family=family)
+            shopping_list = ShoppingList.objects.create(family=family, name="Panier")
 
         # Récupère la recette
         try:
@@ -140,11 +144,6 @@ class RecipeViewSet(ModelViewSet):
         except Exception as e:
             return Response({"error": str(e)}, status=500)
 
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from .models import Family, ShoppingList
-from .serializers import FamilySerializer, ShoppingListSerializer
 
 class UserDataView(APIView):
     permission_classes = [IsAuthenticated]
