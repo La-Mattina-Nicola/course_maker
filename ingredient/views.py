@@ -161,6 +161,7 @@ class UserDataView(APIView):
                 {
                     "id": item.id,
                     "ingredient_name": item.ingredient.name,
+                    "ingredient_type": item.ingredient.type.name if item.ingredient.type else None,
                     "quantity": item.quantity,
                     "unit": item.unit.name if item.unit else None
                 }
