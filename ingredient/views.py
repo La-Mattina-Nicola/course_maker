@@ -156,7 +156,7 @@ class UserDataView(APIView):
         shopping_lists = ShoppingList.objects.filter(family__in=families)
         shopping_lists_response = []
         for shopping_list in shopping_lists:
-            items = ShoppingListItem.objects.filter(list=shopping_list)
+            items = ShoppingListItem.objects.filter(shopping_list=shopping_list)
             items_data = [
                 {
                     "id": item.id,

@@ -59,7 +59,7 @@ class ShoppingList(models.Model):
         return f"{self.name} ({self.family.name})"
 
 class ShoppingListItem(models.Model):
-    list = models.ForeignKey(ShoppingList, related_name='items', on_delete=models.CASCADE)
+    shopping_list = models.ForeignKey(ShoppingList, on_delete=models.CASCADE, null=True)
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
     quantity = models.FloatField()
     unit = models.ForeignKey(Unit, on_delete=models.SET_NULL, null=True)
