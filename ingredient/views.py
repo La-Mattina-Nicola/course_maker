@@ -31,6 +31,27 @@ class LoginView(TokenObtainPairView):
     permission_classes = [AllowAny]
     serializer_class = TokenObtainPairSerializer
 
+class UserSearchView(APIView):
+    permission_classes = [AllowAny]  # Ou IsAuthenticated si tu veux restreindre
+
+    def get(self, request):
+        username = request.query_params.get('username')
+        email = request.query_params.get('email')
+        user = None
+
+        if username:
+            user = User.objects.filter(username=username).first()
+        elif email:
+            user = User.objects.filter(email=email).first()
+
+        if user:
+            return Response({
+                "id": user.id,
+                "username": user.username,
+                "email": user.email
+            }, status=status.HTTP_200_OK)
+        return Response({"detail": "Utilisateur non trouvé."}, status=status.HTTP_404_NOT_FOUND)
+
 class ShoppingListViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = ShoppingList.objects.all().order_by('id')
@@ -82,3 +103,30 @@ class RecipeViewSet(ModelViewSet):
             return Response({"message": "Recipe created successfully"}, status=201)
         except Exception as e:
             return Response({"error": str(e)}, status=500)
+
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import Family, ShoppingList
+from .serializers import FamilySerializer, ShoppingListSerializer
+
+class UserDataView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        families = Family.objects.filter(members=user)
+        family_data = FamilySerializer(families, many=True).data
+
+        shopping_lists = ShoppingList.objects.filter(family__in=families)
+        shopping_list_data = ShoppingListSerializer(shopping_lists, many=True).data
+
+        return Response({
+            "user": {
+                "id": user.id,
+                "username": user.username,
+                "email": user.email,
+            },
+            "families": family_data,
+            "shopping_lists": shopping_list_data
+        })
