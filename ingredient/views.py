@@ -160,8 +160,8 @@ class UserDataView(APIView):
             items_data = [
                 {
                     "id": item.id,
-                    "ingredient_name": item.ingredient.name,
-                    "ingredient_type": item.ingredient.type.name if item.ingredient.type else None,
+                    "ingredient_name": item.ingredient.name if item.ingredient else None,
+                    "ingredient_type": item.ingredient.type.name if item.ingredient and item.ingredient.type else None,
                     "quantity": item.quantity,
                     "unit": item.unit.name if item.unit else None
                 }
