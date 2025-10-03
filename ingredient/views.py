@@ -93,6 +93,15 @@ class ShoppingListViewSet(ModelViewSet):
 
         return Response({"detail": "Recette ajoutée au panier de la famille."})
 
+    @action(detail=True, methods=['delete'], url_path='clear-items')
+    def clear_items(self, request, pk=None):
+        shopping_list = self.get_object()
+        deleted_count, _ = ShoppingListItem.objects.filter(shopping_list=shopping_list).delete()
+        return Response(
+            {"detail": f"{deleted_count} items supprimés de la liste."},
+            status=status.HTTP_200_OK
+        )
+
 class ShoppingListItemViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = ShoppingListItem.objects.all().order_by('id')
