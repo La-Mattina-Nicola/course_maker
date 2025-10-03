@@ -57,6 +57,38 @@ class ShoppingListViewSet(ModelViewSet):
     queryset = ShoppingList.objects.all().order_by('id')
     serializer_class = ShoppingListSerializer
 
+    @action(detail=False, methods=['post'], url_path='add-recipe')
+    def add_recipe(self, request):
+        recipe_id = request.data.get('recipe_id')
+        user = request.user
+
+        # Récupère la famille de l'utilisateur
+        family = Family.objects.filter(members=user).first()
+        if not family:
+            return Response({"detail": "Aucune famille trouvée."}, status=400)
+
+        # Récupère la shopping list de la famille
+        shopping_list = ShoppingList.objects.filter(family=family).first()
+        if not shopping_list:
+            shopping_list = ShoppingList.objects.create(family=family)
+
+        # Récupère la recette
+        try:
+            recipe = Recipe.objects.get(id=recipe_id)
+        except Recipe.DoesNotExist:
+            return Response({"detail": "Recette introuvable."}, status=404)
+
+        # Ajoute chaque ingrédient de la recette à la shopping list
+        for ri in recipe.recipeingredient_set.all():
+            ShoppingListItem.objects.create(
+                shopping_list=shopping_list,
+                ingredient=ri.ingredient,
+                quantity=ri.quantity,
+                unit=ri.unit
+            )
+
+        return Response({"detail": "Recette ajoutée au panier de la famille."})
+
 class ShoppingListItemViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = ShoppingListItem.objects.all().order_by('id')
@@ -66,6 +98,10 @@ class FamilyViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Family.objects.all().order_by('id')
     serializer_class = FamilySerializer
+
+    def perform_create(self, serializer):
+        family = serializer.save()
+        family.members.add(self.request.user)
 
 class RecipeTypeViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
