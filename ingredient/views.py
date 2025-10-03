@@ -2,14 +2,34 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.response import Response
-
+from rest_framework.serializers import ModelSerializer, CharField, ValidationError
+from rest_framework import status
+from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import validate_password
+from rest_framework.views import APIView
 from .models import IngredientType, Ingredient, Recipe, Family, RecipeType, ShoppingList, ShoppingListItem
-
+from rest_framework.permissions import AllowAny
 from .serializers import (
     IngredientTypeSerializer, IngredientSerializer, RecipeSerializer,
     FamilySerializer, RecipeTypeSerializer, ShoppingListSerializer,
-    ShoppingListItemSerializer
+    ShoppingListItemSerializer, RegisterSerializer
 )
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+
+class RegisterView(APIView):
+    permission_classes = [AllowAny]
+    def post(self, request):
+        serializer = RegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Utilisateur créé avec succès."}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class LoginView(TokenObtainPairView):
+    permission_classes = [AllowAny]
+    serializer_class = TokenObtainPairSerializer
 
 class ShoppingListViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]

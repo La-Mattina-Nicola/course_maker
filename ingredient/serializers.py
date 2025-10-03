@@ -3,7 +3,33 @@ from .models import (
     IngredientType, Ingredient, Recipe, RecipeIngredient,
     Unit, Family, RecipeType, ShoppingList, ShoppingListItem
 )
+from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import validate_password
+from rest_framework.serializers import ModelSerializer, CharField, ValidationError
 
+
+class RegisterSerializer(ModelSerializer):
+    password = CharField(write_only=True)
+    password2 = CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ('username', 'password', 'password2', 'email')
+
+    def validate(self, attrs):
+        if attrs['password'] != attrs['password2']:
+            raise ValidationError({"password": "Les mots de passe ne correspondent pas."})
+        validate_password(attrs['password'])
+        return attrs
+
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            email=validated_data.get('email', ''),
+            password=validated_data['password']
+        )
+        return user
+    
 class IngredientTypeSerializer(ModelSerializer):
     class Meta:
         model = IngredientType
