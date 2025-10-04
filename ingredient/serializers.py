@@ -36,10 +36,9 @@ class IngredientTypeSerializer(ModelSerializer):
         fields = "__all__"
 
 class IngredientSerializer(ModelSerializer):
-    type = IngredientTypeSerializer()
     class Meta:
         model = Ingredient
-        fields = "__all__"
+        fields = ['id', 'name', 'type']
 
 class RecipeTypeSerializer(ModelSerializer):
     class Meta:
@@ -93,3 +92,14 @@ class ShoppingListItemSerializer(ModelSerializer):
 
     def get_unit_name(self, obj):
         return obj.unit.name if obj.unit else None
+
+class IngredientTypeSerializer(ModelSerializer):
+    class Meta:
+        model = IngredientType
+        fields = "__all__"
+
+class IngredientSerializer(ModelSerializer):
+    type = serializers.PrimaryKeyRelatedField(queryset=IngredientType.objects.all())
+    class Meta:
+        model = Ingredient
+        fields = ['id', 'name', 'type']

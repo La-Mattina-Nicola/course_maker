@@ -34,8 +34,8 @@ class RecipeType(models.Model):
         return self.name
 
 class Recipe(models.Model):
-    name = models.CharField(max_length=300)
-    type = models.ForeignKey(RecipeType, related_name="recipes", on_delete=models.SET_NULL, null=True)
+    name = models.CharField(max_length=100)
+    type = models.ForeignKey(RecipeType, on_delete=models.CASCADE)
     ingredients = models.ManyToManyField(Ingredient, through='RecipeIngredient', related_name="recipes")
 
     def __str__(self):
