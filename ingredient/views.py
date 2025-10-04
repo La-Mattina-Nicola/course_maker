@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer, CharField, ValidationError
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
+from rest_framework import filters
 
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -64,6 +65,7 @@ class ShoppingListViewSet(ModelViewSet):
     @action(detail=False, methods=['post'], url_path='add-recipe')
     def add_recipe(self, request):
         recipe_id = request.data.get('recipe_id')
+        list_name = request.data.get('list_name', 'Panier')
         user = request.user
 
         # Récupère la famille de l'utilisateur
@@ -71,10 +73,10 @@ class ShoppingListViewSet(ModelViewSet):
         if not family:
             return Response({"detail": "Aucune famille trouvée."}, status=400)
 
-        # Récupère la shopping list de la famille
-        shopping_list = ShoppingList.objects.filter(family=family).first()
+        # Récupère ou crée la shopping list de la famille avec le nom donné
+        shopping_list = ShoppingList.objects.filter(family=family, name=list_name).first()
         if not shopping_list:
-            shopping_list = ShoppingList.objects.create(family=family, name="Panier")
+            shopping_list = ShoppingList.objects.create(family=family, name=list_name)
 
         # Récupère la recette
         try:
@@ -91,7 +93,7 @@ class ShoppingListViewSet(ModelViewSet):
                 unit=ri.unit
             )
 
-        return Response({"detail": "Recette ajoutée au panier de la famille."})
+        return Response({"detail": f"Recette ajoutée à la liste '{list_name}' de la famille."})
 
     @action(detail=True, methods=['delete'], url_path='clear-items')
     def clear_items(self, request, pk=None):
@@ -130,6 +132,8 @@ class IngredientViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Ingredient.objects.all().order_by('id')
     serializer_class = IngredientSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name']
 
 class RecipeViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
