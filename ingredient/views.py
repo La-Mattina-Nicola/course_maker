@@ -137,11 +137,19 @@ class IngredientViewSet(ModelViewSet):
 
 class RecipeViewSet(ModelViewSet):
     queryset = Recipe.objects.all()
-    
+
     def get_serializer_class(self):
         if self.action == 'create':
             return RecipeCreateSerializer
         return RecipeSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        recipe = serializer.save()
+        # Utilise le serializer de lecture pour la réponse
+        read_serializer = RecipeSerializer(recipe)
+        return Response(read_serializer.data, status=status.HTTP_201_CREATED)
 
 class UserDataView(APIView):
     permission_classes = [IsAuthenticated]
