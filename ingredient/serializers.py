@@ -104,3 +104,26 @@ class IngredientSerializer(ModelSerializer):
     class Meta:
         model = Ingredient
         fields = ['id', 'name', 'type']
+
+class RecipeIngredientCreateSerializer(ModelSerializer):
+    ingredient = serializers.PrimaryKeyRelatedField(queryset=Ingredient.objects.all())
+    unit = serializers.PrimaryKeyRelatedField(queryset=Unit.objects.all())
+
+    class Meta:
+        model = RecipeIngredient
+        fields = ['ingredient', 'quantity', 'unit']
+
+class RecipeCreateSerializer(ModelSerializer):
+    ingredients = RecipeIngredientCreateSerializer(many=True)
+    type = serializers.PrimaryKeyRelatedField(queryset=RecipeType.objects.all())
+
+    class Meta:
+        model = Recipe
+        fields = ['id', 'name', 'type', 'ingredients']
+
+    def create(self, validated_data):
+        ingredients_data = validated_data.pop('ingredients')
+        recipe = Recipe.objects.create(**validated_data)
+        for item in ingredients_data:
+            RecipeIngredient.objects.create(recipe=recipe, **item)
+        return recipe
