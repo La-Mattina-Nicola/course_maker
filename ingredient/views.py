@@ -118,6 +118,28 @@ class FamilyViewSet(ModelViewSet):
         family = serializer.save()
         family.members.add(self.request.user)
 
+    @action(detail=True, methods=['post'], url_path='add-favorite')
+    def add_favorite(self, request, pk=None):
+        family = self.get_object()
+        recipe_id = request.data.get('recipe_id')
+        try:
+            recipe = Recipe.objects.get(id=recipe_id)
+        except Recipe.DoesNotExist:
+            return Response({"detail": "Recette introuvable."}, status=404)
+        family.favorite_recipes.add(recipe)
+        return Response({"detail": "Recette ajoutée aux favoris."})
+
+    @action(detail=True, methods=['post'], url_path='remove-favorite')
+    def remove_favorite(self, request, pk=None):
+        family = self.get_object()
+        recipe_id = request.data.get('recipe_id')
+        try:
+            recipe = Recipe.objects.get(id=recipe_id)
+        except Recipe.DoesNotExist:
+            return Response({"detail": "Recette introuvable."}, status=404)
+        family.favorite_recipes.remove(recipe)
+        return Response({"detail": "Recette retirée des favoris."})
+
 class RecipeTypeViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = RecipeType.objects.all().order_by('id')

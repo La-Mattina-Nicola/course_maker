@@ -68,10 +68,11 @@ class RecipeSerializer(ModelSerializer):
 
 class FamilySerializer(ModelSerializer):
     member_names = SerializerMethodField()
+    favorite_recipes = RecipeSerializer(many=True, read_only=True)
 
     class Meta:
         model = Family
-        fields = ['id', 'name', 'member_names']
+        fields = ['id', 'name', 'member_names', 'favorite_recipes']
 
     def get_member_names(self, obj):
         return [user.get_full_name() or user.username for user in obj.members.all()]
