@@ -20,7 +20,7 @@ from .models import (
 from .serializers import (
     IngredientTypeSerializer, IngredientSerializer, RecipeSerializer,
     FamilySerializer, RecipeTypeSerializer, ShoppingListSerializer,
-    ShoppingListItemSerializer, RegisterSerializer, UnitSerializer
+    ShoppingListItemSerializer, RegisterSerializer, UnitSerializer, RecipeCreateSerializer
 )
 
 class RegisterView(APIView):
@@ -136,27 +136,12 @@ class IngredientViewSet(ModelViewSet):
     search_fields = ['name']
 
 class RecipeViewSet(ModelViewSet):
-    permission_classes = [IsAuthenticated]
-    queryset = Recipe.objects.all().order_by('id')
-    serializer_class = RecipeSerializer
-
-    @action(detail=False, methods=["post"], permission_classes=[IsAuthenticated])
-    def create_recipe(self, request):
-        try:
-            name = request.data.get("name")
-            ingredient_ids = request.data.get("ingredients")
-
-            if not name or not ingredient_ids:
-                return Response({"message": "Missing data"}, status=400)
-
-            ingredients = Ingredient.objects.filter(id__in=ingredient_ids)
-            recipe = Recipe.objects.create(name=name)
-            recipe.ingredients.set(ingredients)
-
-            return Response({"message": "Recipe created successfully"}, status=201)
-        except Exception as e:
-            return Response({"error": str(e)}, status=500)
-
+    queryset = Recipe.objects.all()
+    
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return RecipeCreateSerializer
+        return RecipeSerializer
 
 class UserDataView(APIView):
     permission_classes = [IsAuthenticated]

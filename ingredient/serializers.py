@@ -37,6 +37,7 @@ class IngredientTypeSerializer(ModelSerializer):
         fields = "__all__"
 
 class IngredientSerializer(ModelSerializer):
+    type = serializers.PrimaryKeyRelatedField(queryset=IngredientType.objects.all())
     class Meta:
         model = Ingredient
         fields = ['id', 'name', 'type']
