@@ -15,12 +15,12 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from .models import (
     IngredientType, Ingredient, Recipe, Family, RecipeType,
-    ShoppingList, ShoppingListItem
+    ShoppingList, ShoppingListItem, Unit
 )
 from .serializers import (
     IngredientTypeSerializer, IngredientSerializer, RecipeSerializer,
     FamilySerializer, RecipeTypeSerializer, ShoppingListSerializer,
-    ShoppingListItemSerializer, RegisterSerializer
+    ShoppingListItemSerializer, RegisterSerializer, UnitSerializer
 )
 
 class RegisterView(APIView):
@@ -197,3 +197,8 @@ class UserDataView(APIView):
             "families": family_data,
             "shopping_lists": shopping_lists_response
         })
+
+class UnitViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = Unit.objects.all().order_by('id')
+    serializer_class = UnitSerializer

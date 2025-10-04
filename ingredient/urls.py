@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import IngredientTypeViewSet, IngredientViewSet, RecipeTypeViewSet, RecipeViewSet, FamilyViewSet, ShoppingListViewSet, ShoppingListItemViewSet
-from .views import RegisterView, UserSearchView, UserDataView
+from .views import RegisterView, UserSearchView, UserDataView, UnitViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 
@@ -13,6 +13,7 @@ router.register(r'recipes', RecipeViewSet)
 router.register(r'families', FamilyViewSet)
 router.register(r'shopping-lists', ShoppingListViewSet)
 router.register(r'shopping-list-items', ShoppingListItemViewSet)
+router.register(r'units', UnitViewSet)
 
 urlpatterns = [
     path('api/', include(router.urls)),
