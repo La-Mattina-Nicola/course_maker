@@ -6,7 +6,7 @@ from .models import (
 )
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
-from rest_framework.serializers import ModelSerializer, CharField, ValidationError
+from rest_framework.serializers import CharField, ValidationError
 
 
 class RegisterSerializer(ModelSerializer):
@@ -15,7 +15,7 @@ class RegisterSerializer(ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'password', 'password2', 'email')
+        fields = ('id', 'username', 'password', 'password2', 'email')
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
@@ -30,11 +30,11 @@ class RegisterSerializer(ModelSerializer):
             password=validated_data['password']
         )
         return user
-    
+
 class IngredientTypeSerializer(ModelSerializer):
     class Meta:
         model = IngredientType
-        fields = "__all__"
+        fields = ['id', 'name']
 
 class IngredientSerializer(ModelSerializer):
     type = serializers.PrimaryKeyRelatedField(queryset=IngredientType.objects.all())
@@ -45,26 +45,26 @@ class IngredientSerializer(ModelSerializer):
 class RecipeTypeSerializer(ModelSerializer):
     class Meta:
         model = RecipeType
-        fields = "__all__"
+        fields = ['id', 'name']
 
 class UnitSerializer(ModelSerializer):
     class Meta:
         model = Unit
-        fields = "__all__"
+        fields = ['id', 'name']
 
 class RecipeIngredientSerializer(ModelSerializer):
     ingredient = IngredientSerializer()
     unit = UnitSerializer()
     class Meta:
         model = RecipeIngredient
-        fields = "__all__"
+        fields = ['id', 'recipe', 'ingredient', 'quantity', 'unit']
 
 class RecipeSerializer(ModelSerializer):
     ingredients = RecipeIngredientSerializer(many=True, source='recipeingredient_set')
     type = RecipeTypeSerializer()
     class Meta:
         model = Recipe
-        fields = "__all__"
+        fields = ['id', 'name', 'type', 'ingredients']
 
 class FamilySerializer(ModelSerializer):
     member_names = SerializerMethodField()
@@ -72,7 +72,7 @@ class FamilySerializer(ModelSerializer):
 
     class Meta:
         model = Family
-        fields = ['id', 'name', 'member_names', 'favorite_recipes']
+        fields = ['id', 'name', 'members', 'member_names', 'favorite_recipes']
 
     def get_member_names(self, obj):
         return [user.get_full_name() or user.username for user in obj.members.all()]
@@ -80,7 +80,7 @@ class FamilySerializer(ModelSerializer):
 class ShoppingListSerializer(ModelSerializer):
     class Meta:
         model = ShoppingList
-        fields = "__all__"
+        fields = ['id', 'family', 'name', 'created_at']
 
 class ShoppingListItemSerializer(ModelSerializer):
     ingredient_name = SerializerMethodField()
@@ -88,7 +88,7 @@ class ShoppingListItemSerializer(ModelSerializer):
 
     class Meta:
         model = ShoppingListItem
-        fields = ['id', 'list', 'quantity', 'ingredient', 'ingredient_name', 'unit', 'unit_name']
+        fields = ['id', 'shopping_list', 'ingredient', 'ingredient_name', 'quantity', 'unit', 'unit_name']
 
     def get_ingredient_name(self, obj):
         return obj.ingredient.name if obj.ingredient else None
