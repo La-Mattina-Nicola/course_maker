@@ -110,6 +110,12 @@ class ShoppingListItemViewSet(ModelViewSet):
     queryset = ShoppingListItem.objects.all().order_by('id')
     serializer_class = ShoppingListItemSerializer
 
+    def get_queryset(self):
+        user = self.request.user
+        families = Family.objects.filter(members=user)
+        shopping_lists = ShoppingList.objects.filter(family__in=families)
+        return ShoppingListItem.objects.filter(shopping_list__in=shopping_lists).order_by('id')
+
 class FamilyViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Family.objects.all().order_by('id')
@@ -118,6 +124,17 @@ class FamilyViewSet(ModelViewSet):
     def perform_create(self, serializer):
         family = serializer.save()
         family.members.add(self.request.user)
+
+    @action(detail=True, methods=['post'], url_path='add-members')
+    def add_members(self, request, pk=None):
+        family = self.get_object()
+        user_ids = request.data.get('user_ids', [])
+        if not isinstance(user_ids, list):
+            return Response({"detail": "user_ids doit être une liste d'identifiants utilisateur."}, status=400)
+        users = User.objects.filter(id__in=user_ids)
+        for user in users:
+            family.members.add(user)
+        return Response({"detail": f"{users.count()} membres ajoutés à la famille."})
 
     @action(detail=True, methods=['post'], url_path='add-favorite')
     def add_favorite(self, request, pk=None):
