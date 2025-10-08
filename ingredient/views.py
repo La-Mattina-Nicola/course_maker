@@ -9,6 +9,7 @@ from rest_framework.serializers import ModelSerializer, CharField, ValidationErr
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -37,7 +38,7 @@ class LoginView(TokenObtainPairView):
     serializer_class = TokenObtainPairSerializer
 
 class UserSearchView(APIView):
-    permission_classes = [AllowAny]  # Ou IsAuthenticated si tu veux restreindre
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         username = request.query_params.get('username')
@@ -154,11 +155,15 @@ class IngredientViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Ingredient.objects.all().order_by('id')
     serializer_class = IngredientSerializer
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     search_fields = ['name']
+    filterset_fields = ['type']  
 
 class RecipeViewSet(ModelViewSet):
     queryset = Recipe.objects.all()
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+    search_fields = ['name']          
+    filterset_fields = ['type']        
 
     def get_serializer_class(self):
         if self.action == 'create':
@@ -169,7 +174,6 @@ class RecipeViewSet(ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         recipe = serializer.save()
-        # Utilise le serializer de lecture pour la réponse
         read_serializer = RecipeSerializer(recipe)
         return Response(read_serializer.data, status=status.HTTP_201_CREATED)
 
