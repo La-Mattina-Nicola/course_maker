@@ -31,12 +31,6 @@ class RegisterSerializer(ModelSerializer):
         )
         return user
 
-class IngredientSerializer(ModelSerializer):
-    type = serializers.PrimaryKeyRelatedField(queryset=IngredientType.objects.all())
-    class Meta:
-        model = Ingredient
-        fields = ['id', 'name', 'type']
-
 class RecipeTypeSerializer(ModelSerializer):
     class Meta:
         model = RecipeType
@@ -46,6 +40,12 @@ class UnitSerializer(ModelSerializer):
     class Meta:
         model = Unit
         fields = ['id', 'name']
+        
+class IngredientSerializer(ModelSerializer):
+    type = serializers.PrimaryKeyRelatedField(queryset=IngredientType.objects.all())
+    class Meta:
+        model = Ingredient
+        fields = ['id', 'name', 'type']
 
 class RecipeIngredientSerializer(ModelSerializer):
     ingredient = IngredientSerializer()
@@ -95,12 +95,6 @@ class IngredientTypeSerializer(ModelSerializer):
     class Meta:
         model = IngredientType
         fields = ['id', 'name']
-
-class IngredientSerializer(ModelSerializer):
-    type = serializers.PrimaryKeyRelatedField(queryset=IngredientType.objects.all())
-    class Meta:
-        model = Ingredient
-        fields = ['id', 'name', 'type']
 
 class RecipeIngredientCreateSerializer(ModelSerializer):
     ingredient = serializers.PrimaryKeyRelatedField(queryset=Ingredient.objects.all())
