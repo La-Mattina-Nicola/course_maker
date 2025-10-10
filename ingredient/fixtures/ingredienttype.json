@@ -1,0 +1,52 @@
+[
+  {
+    "model": "ingredient.ingredienttype",
+    "pk": 1,
+    "fields": { "name": "Fruits & Légumes" }
+  },
+  {
+    "model": "ingredient.ingredienttype",
+    "pk": 2,
+    "fields": { "name": "Produit Laitier" }
+  },
+  {
+    "model": "ingredient.ingredienttype",
+    "pk": 3,
+    "fields": { "name": "Sauce" }
+  },
+  {
+    "model": "ingredient.ingredienttype",
+    "pk": 4,
+    "fields": { "name": "Boisson" }
+  },
+  {
+    "model": "ingredient.ingredienttype",
+    "pk": 5,
+    "fields": { "name": "Viandes, poissons et oeufs" }
+  },
+  {
+    "model": "ingredient.ingredienttype",
+    "pk": 6,
+    "fields": { "name": "Boulangerie et céréales" }
+  },
+  {
+    "model": "ingredient.ingredienttype",
+    "pk": 7,
+    "fields": { "name": "Epicerie" }
+  },
+  {
+    "model": "ingredient.ingredienttype",
+    "pk": 8,
+    "fields": { "name": "Confiserie" }
+  },
+  {
+    "model": "ingredient.ingredienttype",
+    "pk": 9,
+    "fields": { "name": "Condiments et assaisonnements" }
+  },
+  {
+    "model": "ingredient.ingredienttype",
+    "pk": 10,
+    "fields": { "name": "Produits surgelés" }
+  }
+]

@@ -1,0 +1,487 @@
+[
+  {
+    "model": "ingredient.ingredient",
+    "pk": 1,
+    "fields": { "name": "Menthe", "type": 1 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 2,
+    "fields": { "name": "Citron vert", "type": 1 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 3,
+    "fields": { "name": "Pommes", "type": 1 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 4,
+    "fields": { "name": "Bananes", "type": 1 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 5,
+    "fields": { "name": "Oranges", "type": 1 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 6,
+    "fields": { "name": "Fraises", "type": 1 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 7,
+    "fields": { "name": "Myrtilles", "type": 1 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 8,
+    "fields": { "name": "Concombres", "type": 1 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 9,
+    "fields": { "name": "Carottes", "type": 1 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 10,
+    "fields": { "name": "Courgettes", "type": 1 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 11,
+    "fields": { "name": "Poivrons rouges", "type": 1 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 12,
+    "fields": { "name": "Poivrons verts", "type": 1 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 13,
+    "fields": { "name": "Oignons rouges", "type": 1 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 14,
+    "fields": { "name": "Oignons jaunes", "type": 1 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 15,
+    "fields": { "name": "Ail", "type": 1 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 16,
+    "fields": { "name": "Pommes de terre", "type": 1 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 17,
+    "fields": { "name": "Salade verte", "type": 1 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 18,
+    "fields": { "name": "Epinards", "type": 1 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 19,
+    "fields": { "name": "Champignons", "type": 1 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 20,
+    "fields": { "name": "Lait entier", "type": 2 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 21,
+    "fields": { "name": "Lait végétal", "type": 2 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 22,
+    "fields": { "name": "Yaout nature", "type": 2 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 23,
+    "fields": { "name": "Yaourt aux fruits", "type": 2 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 24,
+    "fields": { "name": "Crème fraîche", "type": 2 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 25,
+    "fields": { "name": "Beurre doux", "type": 2 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 26,
+    "fields": { "name": "Beurre demi-sel", "type": 2 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 27,
+    "fields": { "name": "Fromage rapé", "type": 2 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 28,
+    "fields": { "name": "Feta", "type": 2 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 29,
+    "fields": { "name": "Rhum", "type": 4 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 30,
+    "fields": { "name": "Jus de pomme", "type": 4 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 31,
+    "fields": { "name": "Blanc de poulet", "type": 5 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 32,
+    "fields": { "name": "Cuisses de poulet", "type": 5 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 33,
+    "fields": { "name": "Steak haché", "type": 5 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 34,
+    "fields": { "name": "Filet de boeuf", "type": 5 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 35,
+    "fields": { "name": "Saucisses", "type": 5 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 36,
+    "fields": { "name": "Bacon", "type": 5 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 37,
+    "fields": { "name": "Jambon", "type": 5 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 38,
+    "fields": { "name": "Filet de saumon", "type": 5 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 39,
+    "fields": { "name": "Thon en boite", "type": 5 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 40,
+    "fields": { "name": "Crevettes", "type": 5 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 41,
+    "fields": { "name": "Fillet de cabillaud", "type": 5 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 42,
+    "fields": { "name": "Oeufs", "type": 5 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 43,
+    "fields": { "name": "Lardons", "type": 5 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 44,
+    "fields": { "name": "Dinde", "type": 5 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 45,
+    "fields": { "name": "Boulettes de viande", "type": 5 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 46,
+    "fields": { "name": "Saumon", "type": 5 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 47,
+    "fields": { "name": "Pain de mie", "type": 6 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 48,
+    "fields": { "name": "Baguette", "type": 6 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 49,
+    "fields": { "name": "Pain complet", "type": 6 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 50,
+    "fields": { "name": "Croissants", "type": 6 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 51,
+    "fields": { "name": "Céréales petit-dej", "type": 6 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 52,
+    "fields": { "name": "Flocons d'avoine", "type": 6 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 53,
+    "fields": { "name": "Farine de blé", "type": 6 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 54,
+    "fields": { "name": "Farine complète", "type": 6 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 55,
+    "fields": { "name": "Levure boulangère", "type": 6 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 56,
+    "fields": { "name": "Tortillas", "type": 6 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 57,
+    "fields": { "name": "Riz basmati", "type": 7 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 58,
+    "fields": { "name": "Riz complet", "type": 7 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 59,
+    "fields": { "name": "Pates", "type": 7 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 60,
+    "fields": { "name": "Lentilles vertes", "type": 7 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 61,
+    "fields": { "name": "Pois chiches", "type": 7 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 62,
+    "fields": { "name": "Haricots rouges", "type": 7 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 63,
+    "fields": { "name": "Bouillon cube", "type": 7 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 64,
+    "fields": { "name": "Sauce tomate", "type": 7 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 65,
+    "fields": { "name": "Purée de tomates", "type": 7 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 66,
+    "fields": { "name": "Mais en boite", "type": 7 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 67,
+    "fields": { "name": "Olives noires", "type": 7 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 68,
+    "fields": { "name": "Olives vertes", "type": 7 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 69,
+    "fields": { "name": "Thon en boite", "type": 7 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 70,
+    "fields": { "name": "Sucre blanc", "type": 8 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 71,
+    "fields": { "name": "Sucre roux", "type": 8 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 72,
+    "fields": { "name": "Miel", "type": 8 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 73,
+    "fields": { "name": "Confiture", "type": 8 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 74,
+    "fields": { "name": "Chocolat noir", "type": 8 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 75,
+    "fields": { "name": "Chocolat au lait", "type": 8 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 76,
+    "fields": { "name": "Pate à tartiner", "type": 8 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 77,
+    "fields": { "name": "Sirop d'érable", "type": 8 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 78,
+    "fields": { "name": "Vanille liquide", "type": 8 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 79,
+    "fields": { "name": "Compote de pommes", "type": 8 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 80,
+    "fields": { "name": "Sel", "type": 9 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 81,
+    "fields": { "name": "Poivre", "type": 9 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 82,
+    "fields": { "name": "Paprika", "type": 9 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 83,
+    "fields": { "name": "Curry", "type": 9 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 84,
+    "fields": { "name": "Herbes de provence", "type": 9 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 85,
+    "fields": { "name": "Basilic", "type": 9 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 86,
+    "fields": { "name": "Moutarde", "type": 9 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 87,
+    "fields": { "name": "Ketchup", "type": 9 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 88,
+    "fields": { "name": "Mayonnaise", "type": 9 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 89,
+    "fields": { "name": "Sauce soja", "type": 9 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 90,
+    "fields": { "name": "Légumes surgelés", "type": 10 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 91,
+    "fields": { "name": "Fruits surgelés", "type": 10 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 92,
+    "fields": { "name": "Frites surgelées", "type": 10 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 93,
+    "fields": { "name": "Nuggets", "type": 10 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 94,
+    "fields": { "name": "Pizza surgelée", "type": 10 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 95,
+    "fields": { "name": "Glace vanille", "type": 10 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 96,
+    "fields": { "name": "Glace chocolat", "type": 10 }
+  },
+  {
+    "model": "ingredient.ingredient",
+    "pk": 97,
+    "fields": { "name": "Poisson pané", "type": 10 }
+  }
+]
