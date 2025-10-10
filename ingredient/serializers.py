@@ -31,11 +31,6 @@ class RegisterSerializer(ModelSerializer):
         )
         return user
 
-class IngredientTypeSerializer(ModelSerializer):
-    class Meta:
-        model = IngredientType
-        fields = ['id', 'name']
-
 class IngredientSerializer(ModelSerializer):
     type = serializers.PrimaryKeyRelatedField(queryset=IngredientType.objects.all())
     class Meta:
