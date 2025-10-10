@@ -66,7 +66,7 @@ class ShoppingListViewSet(ModelViewSet):
     @action(detail=False, methods=['post'], url_path='add-recipe')
     def add_recipe(self, request):
         recipe_id = request.data.get('recipe_id')
-        list_name = request.data.get('list_name', 'Panier')
+        list_name = request.data.get('list_name')
         user = request.user
 
         # Récupère la famille de l'utilisateur

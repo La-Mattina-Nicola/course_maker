@@ -53,7 +53,7 @@ class RecipeIngredient(models.Model):
 
 class ShoppingList(models.Model):
     family = models.ForeignKey(Family, related_name='shopping_lists', on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, default="Panier")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
