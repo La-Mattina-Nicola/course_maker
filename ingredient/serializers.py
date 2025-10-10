@@ -99,7 +99,7 @@ class ShoppingListItemSerializer(ModelSerializer):
 class IngredientTypeSerializer(ModelSerializer):
     class Meta:
         model = IngredientType
-        fields = "__all__"
+        fields = ['id', 'name']
 
 class IngredientSerializer(ModelSerializer):
     type = serializers.PrimaryKeyRelatedField(queryset=IngredientType.objects.all())
