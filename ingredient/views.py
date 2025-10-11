@@ -124,6 +124,7 @@ class FamilyViewSet(ModelViewSet):
     def perform_create(self, serializer):
         family = serializer.save()
         family.members.add(self.request.user)
+        ShoppingList.objects.create(family=family)
 
     @action(detail=True, methods=['post'], url_path='add-members')
     def add_members(self, request, pk=None):
