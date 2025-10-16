@@ -136,6 +136,17 @@ class FamilyViewSet(ModelViewSet):
         for user in users:
             family.members.add(user)
         return Response({"detail": f"{users.count()} membres ajoutés à la famille."})
+    
+    @action(detail=True, methods=['post'], url_path='remove-members')
+    def remove_members(self, request, pk=None):
+        family = self.get_object()
+        user_ids = request.data.get('user_ids', [])
+        if not isinstance(user_ids, list):
+            return Response({"detail": "user_ids doit être une liste d'identifiants utilisateur."}, status=400)
+        users = User.objects.filter(id__in=user_ids)
+        for user in users:
+            family.members.remove(user)
+        return Response({"detail": f"{users.count()} membres retirés de la famille."})
 
     @action(detail=True, methods=['post'], url_path='add-favorite')
     def add_favorite(self, request, pk=None):
