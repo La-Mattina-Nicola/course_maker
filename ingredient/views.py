@@ -280,6 +280,8 @@ class UserDataView(APIView):
                 "id": user.id,
                 "username": user.username,
                 "email": user.email,
+                "first_name": user.first_name,
+                "last_name": user.last_name,
             },
             "families": family_data,
             "shopping_lists": shopping_lists_response
