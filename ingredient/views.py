@@ -109,13 +109,13 @@ class ShoppingListViewSet(ModelViewSet):
         user = request.user
 
         # Récupère la famille de l'utilisateur
-        family = Family.objects.filter(members=user).first()
-        if not family:
+        families = Family.objects.filter(members=user)
+        if not families.exists():
             return Response({"detail": "Aucune famille trouvée."}, status=400)
 
-        # Récupère la shopping list par ID
+        # Récupère la shopping list par ID et vérifie qu'elle appartient à une famille de l'utilisateur
         try:
-            shopping_list = ShoppingList.objects.get(id=shopping_list_id, family=family)
+            shopping_list = ShoppingList.objects.get(id=shopping_list_id, family__in=families)
         except ShoppingList.DoesNotExist:
             return Response({"detail": "Liste de course introuvable ou non autorisée."}, status=404)
 
