@@ -105,7 +105,7 @@ class ShoppingListViewSet(ModelViewSet):
     @action(detail=False, methods=['post'], url_path='add-recipe')
     def add_recipe(self, request):
         recipe_id = request.data.get('recipe_id')
-        list_name = request.data.get('list_name')
+        shopping_list_id = request.data.get('shopping_list_id')
         user = request.user
 
         # Récupère la famille de l'utilisateur
@@ -113,10 +113,11 @@ class ShoppingListViewSet(ModelViewSet):
         if not family:
             return Response({"detail": "Aucune famille trouvée."}, status=400)
 
-        # Récupère ou crée la shopping list de la famille avec le nom donné
-        shopping_list = ShoppingList.objects.filter(family=family, name=list_name).first()
-        if not shopping_list:
-            shopping_list = ShoppingList.objects.create(family=family, name=list_name)
+        # Récupère la shopping list par ID
+        try:
+            shopping_list = ShoppingList.objects.get(id=shopping_list_id, family=family)
+        except ShoppingList.DoesNotExist:
+            return Response({"detail": "Liste de course introuvable ou non autorisée."}, status=404)
 
         # Récupère la recette
         try:
@@ -133,7 +134,7 @@ class ShoppingListViewSet(ModelViewSet):
                 unit=ri.unit
             )
 
-        return Response({"detail": f"Recette ajoutée à la liste '{list_name}' de la famille."})
+        return Response({"detail": f"Recette ajoutée à la liste '{shopping_list.name}' de la famille."})
 
     @action(detail=True, methods=['delete'], url_path='clear-items')
     def clear_items(self, request, pk=None):
