@@ -37,6 +37,45 @@ class LoginView(TokenObtainPairView):
     permission_classes = [AllowAny]
     serializer_class = TokenObtainPairSerializer
 
+class UserProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        return Response({
+            "id": user.id,
+            "username": user.username,
+            "email": user.email,
+            "first_name": user.first_name,
+            "last_name": user.last_name
+        })
+
+    def put(self, request):
+        user = request.user
+        username = request.data.get('username')
+        email = request.data.get('email')
+        first_name = request.data.get('first_name')
+        last_name = request.data.get('last_name')
+        password = request.data.get('password')
+
+        if username:
+            # Vérifie que le username n'existe pas déjà
+            if User.objects.filter(username=username).exclude(id=user.id).exists():
+                return Response({"detail": "Ce username est déjà utilisé."}, status=400)
+            user.username = username
+        if email:
+            user.email = email
+        if first_name:
+            user.first_name = first_name
+        if last_name:
+            user.last_name = last_name
+        if password:
+            validate_password(password)
+            user.set_password(password)
+
+        user.save()
+        return Response({"detail": "Profil mis à jour avec succès."})
+
 class UserSearchView(APIView):
     permission_classes = [IsAuthenticated]
 

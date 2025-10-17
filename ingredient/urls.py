@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import IngredientTypeViewSet, IngredientViewSet, RecipeTypeViewSet, RecipeViewSet, FamilyViewSet, ShoppingListViewSet, ShoppingListItemViewSet
-from .views import RegisterView, UserSearchView, UserDataView, UnitViewSet
+from .views import RegisterView, UserSearchView, UserDataView, UnitViewSet, UserProfileView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 
@@ -20,6 +20,7 @@ urlpatterns = [
     path('api/register/', RegisterView.as_view(), name='api-register'),
     path('api/login/', TokenObtainPairView.as_view(), name='api-login'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/user-profile/', UserProfileView.as_view(), name='api-user-profile'),
     path('api/user-search/', UserSearchView.as_view(), name='api-user-search'),
     path('api/user-data/', UserDataView.as_view(), name='api-user-data'),
 ]
